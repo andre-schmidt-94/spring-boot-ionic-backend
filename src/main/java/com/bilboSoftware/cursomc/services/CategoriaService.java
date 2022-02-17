@@ -11,13 +11,20 @@ import com.bilboSoftware.cursomc.repositories.CategoriaRepository;
 
 @Service
 public class CategoriaService {
-	
+
 	@Autowired
 	private CategoriaRepository repo;
-	
+
 	public Categoria buscar(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
-		
-		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName(), null));	
+
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName(), null));
+	}
+
+	public Categoria insert(Categoria obj) {
+		obj.setId(null);
+
+		return repo.save(obj);
 	}
 }
