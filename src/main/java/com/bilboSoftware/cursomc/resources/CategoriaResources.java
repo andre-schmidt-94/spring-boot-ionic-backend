@@ -40,8 +40,15 @@ public class CategoriaResources {
 	@RequestMapping(value = "{Id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer Id) {
 		obj.setId(Id);
-		
+
 		obj = service.update(obj);
+
+		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(value = "{Id}", method = RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer Id) {
+		service.delete(Id);
 		
 		return ResponseEntity.noContent().build();
 	}
