@@ -1,5 +1,6 @@
 package com.bilboSoftware.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.ObjectNotFoundException;
@@ -43,5 +44,10 @@ public class CategoriaService {
 			throw new DataIntegrityException("Não é possível excluir uma Categoria que possui Produtos.");
 		}
 
+	}
+
+	public List<Categoria> findAll() {
+
+		return repo.findAll();
 	}
 }

@@ -1,6 +1,9 @@
 package com.bilboSoftware.cursomc.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.bilboSoftware.cursomc.domain.Categoria;
+import com.bilboSoftware.cursomc.dto.CategoriaDTO;
 import com.bilboSoftware.cursomc.services.CategoriaService;
 
 @RestController
@@ -49,7 +53,17 @@ public class CategoriaResources {
 	@RequestMapping(value = "{Id}", method = RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer Id) {
 		service.delete(Id);
-		
+
 		return ResponseEntity.noContent().build();
+	}
+
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+
+		List<Categoria> objList = service.findAll();
+
+		List<CategoriaDTO> objListDTO = objList.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+
+		return ResponseEntity.ok().body(objListDTO);
 	}
 }
